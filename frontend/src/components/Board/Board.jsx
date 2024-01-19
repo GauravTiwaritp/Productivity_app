@@ -8,18 +8,15 @@ import Column from "../Columns/Column";
 const Board = () => {
   const dispatch = useDispatch();
 
-  const { taskByStatus, loading } = useSelector((store) => {
+  const { taskByStatus } = useSelector((store) => {
     return store.board;
   });
 
   useEffect(() => {
     dispatch(getTodoGroupByColumn());
+    console.log("hello");
   }, []);
   const onDragEnd = (result) => {
-    const { destination } = result;
-    console.log(result);
-    if (!destination) return;
-
     dispatch(setTaskByStatus(result));
   };
 
@@ -36,7 +33,7 @@ const Board = () => {
               >
                 {Object.entries(taskByStatus).map(([id, column], index) => {
                   return (
-                    <Column id={id} column={column} key={index} index={index} />
+                    <Column id={id} column={column} key={id} index={index} />
                   );
                 })}
                 {provided.placeholder}
