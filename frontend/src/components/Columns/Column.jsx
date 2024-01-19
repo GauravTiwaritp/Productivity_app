@@ -5,7 +5,7 @@ import { FcPlus } from "react-icons/fc";
 //index.toString()}
 const Column = (props) => {
   const { id, column, index } = props;
-  console.log(id, column, index);
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => {
@@ -33,6 +33,9 @@ const Column = (props) => {
                     </h2>
                     <div className="space-y-2">
                       {column.map((todo, index) => {
+                        // {
+                        //   console.log(todo["_id"]);
+                        // }
                         return (
                           <Draggable
                             draggableId={todo["_id"]}
