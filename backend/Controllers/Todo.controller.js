@@ -26,7 +26,7 @@ const createTask = async (req, res) => {
   }
 };
 
-const updateTask = async (rq, res) => {
+const updateTask = async (req, res) => {
   try {
     const { _id, title, status } = req.body;
     if (title.length > 0) {
@@ -38,7 +38,7 @@ const updateTask = async (rq, res) => {
     res.status(200).json({ message: "Task updated succesfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Something Wrong has Happened up" });
+    res.status(500).json({ error });
   }
 };
 
