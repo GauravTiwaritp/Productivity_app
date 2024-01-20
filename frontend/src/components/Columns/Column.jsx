@@ -2,6 +2,7 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import ToDoCard from "../ToDoCard/ToDoCard";
 import PropTypes from "prop-types";
 import { FcPlus } from "react-icons/fc";
+
 //index.toString()}
 const Column = (props) => {
   const { id, column, index } = props;
@@ -33,9 +34,6 @@ const Column = (props) => {
                     </h2>
                     <div className="space-y-2">
                       {column.map((todo, index) => {
-                        // {
-                        //   console.log(todo["_id"]);
-                        // }
                         return (
                           <Draggable
                             draggableId={todo["_id"]}

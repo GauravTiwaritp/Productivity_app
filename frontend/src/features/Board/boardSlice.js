@@ -65,17 +65,33 @@ export const boardSlice = createSlice({
         state.status.map((title) => {
           newTaskByStatus[title] = [...state.taskByStatus[title]];
         });
+
         state.status.forEach((title, index) => {
           if (index == source.droppableId) {
             [removedTask] = newTaskByStatus[title].splice(source.index, 1);
-            console.log(removedTask.status);
           }
         });
+
         state.status.forEach((title, index) => {
           if (index == destination.droppableId) {
+            removedTask = { ...removedTask };
+            removedTask.status = title;
+            console.log(removedTask.status);
             newTaskByStatus[title].splice(destination.index, 0, removedTask);
           }
         });
+        try {
+          customFetch
+            .patch("Todo/updateTask", removedTask)
+            .then((resp) => {
+              console.log(resp);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } catch (err) {
+          console.log(err);
+        }
 
         return {
           ...state,
