@@ -42,4 +42,16 @@ const updateTask = async (req, res) => {
   }
 };
 
-module.exports = { getData, createTask, updateTask };
+const deleteTask = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { _id } = req.body;
+    const resp = await TodoScheme.findByIdAndDelete(_id);
+    res.status(200).json({ message: resp });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error });
+  }
+};
+
+module.exports = { getData, createTask, updateTask, deleteTask };

@@ -24,6 +24,23 @@ export const getTodoGroupByColumn = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk(
+  "board/deleteTask",
+  async (todo, thunkApi) => {
+    const deleteTask = todo;
+    try {
+      const resp = await customFetch.delete("/Todo/deleteTask", {
+        data: deleteTask,
+      });
+
+      console.log(resp.data);
+      return resp.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.response.message);
+    }
+  }
+);
+
 //getTodoGroupByColumn
 export const boardSlice = createSlice({
   name: "board",
@@ -120,7 +137,26 @@ export const boardSlice = createSlice({
       .addCase(getTodoGroupByColumn.rejected, (state) => {
         state.loading = false;
         state.error = "Something is wrong please try it after sometime";
-      });
+      }),
+      builder
+        .addCase(deleteTask.pending, (state) => {
+          state.loading = true;
+        })
+        .addCase(deleteTask.fulfilled, (state, action) => {
+          state.loading = false;
+          const id = action.payload.message["_id"];
+          state.taskByStatus[action.payload.message["status"]] =
+            state.taskByStatus[action.payload.message["status"]].filter(
+              (task) => {
+                //console.log(task["_id"]);
+                return task["_id"] !== id;
+              }
+            );
+        })
+        .addCase(deleteTask.rejected, (state) => {
+          state.loading = false;
+          state.error = "Something is wrong please try it after sometime";
+        });
   },
 });
 
