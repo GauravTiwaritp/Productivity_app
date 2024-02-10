@@ -1,12 +1,13 @@
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import ToDoCard from "../ToDoCard/ToDoCard";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { FcPlus } from "react-icons/fc";
-
+import { openModal } from "../../features/Modal/ModalSlice";
 //index.toString()}
 const Column = (props) => {
   const { id, column, index } = props;
-
+  const dispatch = useDispatch();
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => {
@@ -58,7 +59,7 @@ const Column = (props) => {
 
                       {provided.placeholder}
                       <div>
-                        <button>
+                        <button onClick={() => dispatch(openModal())}>
                           <FcPlus className="h-10 w-10" />
                         </button>
                       </div>

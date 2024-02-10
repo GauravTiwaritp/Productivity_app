@@ -10,6 +10,7 @@ const initialState = {
   },
   loading: true,
   error: "",
+  taskInput: "",
 };
 
 export const getTodoGroupByColumn = createAsyncThunk(
@@ -31,6 +32,23 @@ export const deleteTask = createAsyncThunk(
     try {
       const resp = await customFetch.delete("/Todo/deleteTask", {
         data: deleteTask,
+      });
+
+      console.log(resp.data);
+      return resp.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.response.message);
+    }
+  }
+);
+
+export const createTask = createAsyncThunk(
+  "board/createTask",
+  async (task, thunkApi) => {
+    const createTask = task;
+    try {
+      const resp = await customFetch.post("/Todo/createTask", {
+        data: createTask,
       });
 
       console.log(resp.data);
